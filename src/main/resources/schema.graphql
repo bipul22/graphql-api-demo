@@ -1,0 +1,9 @@
+type Query{
+	getUser(id:Int):User
+	getUsers:[User]
+}
+type User{
+	id:Int
+	name:String
+	score:Int
+}
