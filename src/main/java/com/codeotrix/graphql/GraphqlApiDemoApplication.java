@@ -31,7 +31,7 @@ public class GraphqlApiDemoApplication {
 	@Bean
 	public GraphQL graphQL() throws IOException {
 
-		// Getting file from resource folder
+		// Getting file from resource folder.
 		ClassPathResource classPathResource = new ClassPathResource("schema.graphql");
 
 		// Initializing the typeDefinitionRegistry from schema file using SchemaParser.
