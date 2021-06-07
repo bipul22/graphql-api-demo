@@ -40,7 +40,9 @@ public class GraphqlApiDemoApplication {
 		// Setting runtimeWiring with service methods
 		RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
 				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getUser", userService.getUser()))
-				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getUsers", userService.getUsers())).build();
+				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getUsers", userService.getUsers()))
+				.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("createUser", userService.createUser()))
+				.build();
 
 		// Initializing the graphQLSchema using SchemaGenerator
 		// Passing typeDefinitionRegistry and runtimeWiring as arguments.

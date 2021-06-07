@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codeotrix.graphql.entity.User;
 import com.codeotrix.graphql.model.UserRequest;
+import com.codeotrix.graphql.repository.UserRepository;
 import com.codeotrix.graphql.service.UserService;
 
 import graphql.ExecutionInput;
@@ -26,7 +27,7 @@ public class UserController {
 	private GraphQL graphql;
 
 	@Autowired
-	private UserService userService;
+	private UserRepository userRepository;
 
 	@PostMapping(value = "/query")
 	public Map<String, Object> execute(@RequestBody UserRequest userRequest) {
@@ -35,17 +36,17 @@ public class UserController {
 						.operationName(userRequest.getOperationName()).variables(userRequest.getVariables()).build())
 				.toSpecification();
 	}
-	
-	//Rest API
+
+	// Rest API
 
 	@GetMapping
 	public User getUser(@RequestParam(name = "id") Integer id) {
-		return userService.getUserDataWithId(id);
+		return userRepository.findById(id).get();
 	}
 
 	@GetMapping("/all")
 	public List<User> getUserList() {
-		return userService.getUserDataList();
+		return userRepository.findAll();
 	}
 
 }

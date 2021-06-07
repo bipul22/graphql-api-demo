@@ -1,15 +1,38 @@
 package com.codeotrix.graphql.entity;
 
-public class User {
-	private Integer id;
-	private String name;
-	private Integer score;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-	public User(Integer id, String name, Integer score) {
+@Entity
+@Table(name = "user")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "score")
+	private Integer score;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "contact_id")
+	private Contact contact;
+
+	public User() {
+	}
+
+	public User(String name, Integer score, Contact contact) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.score = score;
+		this.contact = contact;
 	}
 
 	public Integer getId() {
@@ -34,6 +57,14 @@ public class User {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 }

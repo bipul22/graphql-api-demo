@@ -2,8 +2,17 @@ type Query{
 	getUser(id:Int):User
 	getUsers:[User]
 }
+type Mutation{
+	createUser(name:String,score:Int,mobile:Int,email:String):User
+}
+type Contact{
+	id:Int
+	mobile:Int
+	email:String
+}
 type User{
 	id:Int
 	name:String
 	score:Int
+	contact:Contact
 }

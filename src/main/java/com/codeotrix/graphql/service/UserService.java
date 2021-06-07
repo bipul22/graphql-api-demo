@@ -1,39 +1,37 @@
 package com.codeotrix.graphql.service;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.codeotrix.graphql.entity.Contact;
 import com.codeotrix.graphql.entity.User;
+import com.codeotrix.graphql.repository.UserRepository;
+import com.codeotrix.graphql.repository.ContactRepository;
 
 import graphql.schema.DataFetcher;
 
 @Service
 public class UserService {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 
 	public DataFetcher<User> getUser() {
-		return environment -> getUserDataWithId(environment.getArgument("id"));
+		return environment -> userRepository.findById(environment.getArgument("id")).orElseThrow();
 	}
 
 	public DataFetcher<List<User>> getUsers() {
-		return environment -> getUserDataList();
+		return environment -> userRepository.findAll();
 	}
 
-	public List<User> getUserDataList() {
-		List<User> userList = new ArrayList();
-		setUserDataList(userList);
-		return userList;
+	public DataFetcher<User> createUser() {
+		return environment -> userRepository.save(
+				new User(environment.getArgument("name"), environment.getArgument("score"), contactRepository.save(
+						new Contact(environment.getArgument("mobile"), environment.getArgument("email")))));
+
 	}
 
-	public User getUserDataWithId(Integer id) {
-		return getUserDataList().stream().filter(user -> id == user.getId()).findFirst().get();
-	}
-
-	public void setUserDataList(List<User> userList) {
-		userList.add(new User(1, "Raj", 600));
-		userList.add(new User(2, "Rahul", 700));
-		userList.add(new User(3, "Rakesh", 650));
-	}
 }

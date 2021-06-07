@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS contact;
+
+CREATE TABLE user (
+  id INT AUTO_INCREMENT  PRIMARY KEY,
+  name VARCHAR(250) NOT NULL,
+  score INT NOT NULL,
+  contact_id INT NOT NULL
+);
+  
+CREATE TABLE contact (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  mobile INT NOT NULL,
+  email VARCHAR(250) NOT NULL
+);
+
+
+  
